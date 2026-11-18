@@ -1,0 +1,40 @@
+# Кількість реплік (використовується, лише якщо autoscaling вимкнено)
+replicaCount: 2
+
+image:
+  repository: 630702530052.dkr.ecr.eu-north-1.amazonaws.com/lesson-7-django
+  tag: latest
+  pullPolicy: Always
+
+containerPort: 8000
+
+service:
+  type: LoadBalancer
+  port: 80
+
+resources:
+  requests:
+    cpu: 100m
+    memory: 128Mi
+  limits:
+    cpu: 500m
+    memory: 256Mi
+
+autoscaling:
+  enabled: true
+  minReplicas: 2
+  maxReplicas: 6
+  targetCPUUtilizationPercentage: 70
+
+# Змінні середовища з теми 4 -> ConfigMap -> envFrom у Deployment
+config:
+  DJANGO_DEBUG: "True"
+  DJANGO_ALLOWED_HOSTS: "*"
+  # У кластері немає PostgreSQL, тому застосунок використовує SQLite.
+  # Для зовнішньої БД (наприклад, RDS) встановіть DB_ENGINE: "postgres".
+  DB_ENGINE: "sqlite"
+  POSTGRES_DB: "django_db"
+  POSTGRES_USER: "django"
+  POSTGRES_PASSWORD: "django"
+  POSTGRES_HOST: "db"
+  POSTGRES_PORT: "5432"

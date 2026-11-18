@@ -1,0 +1,6 @@
+apiVersion: v2
+name: django-app
+description: Django-застосунок у Kubernetes (Deployment, Service LoadBalancer, HPA, ConfigMap)
+type: application
+version: 0.1.0
+appVersion: "1.0.0"

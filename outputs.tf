@@ -45,3 +45,19 @@ output "ecr_repository_url" {
   description = "URL репозиторію ECR"
   value       = module.ecr.repository_url
 }
+
+# ---------- EKS ----------
+output "eks_cluster_name" {
+  description = "Назва EKS-кластера"
+  value       = module.eks.cluster_name
+}
+
+output "eks_cluster_endpoint" {
+  description = "Endpoint Kubernetes API"
+  value       = module.eks.cluster_endpoint
+}
+
+output "kubeconfig_command" {
+  description = "Команда для налаштування kubectl"
+  value       = "aws eks update-kubeconfig --region eu-north-1 --name ${module.eks.cluster_name}"
+}
